@@ -1,0 +1,35 @@
+name: Weekly Stats Update
+
+on:
+  schedule:
+    - cron: '0 2 * * 2'   # Every Tuesday at 0:00 UTC
+  workflow_dispatch:      # Allows manual run
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run update script
+        run: |
+          python update_data.py
+
+      - name: Commit and push updated stats
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add data/stats.json
+          git commit -m "Weekly automatic stats update" || echo "No changes"
+          git push
