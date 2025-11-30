@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fantasy League Stats</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background: #0077ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+        table { border-collapse: collapse; width: 60%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+        th { background: #eee; }
+    </style>
+</head>
+<body>
+    <h1>Fantasy Football Stats</h1>
+
+    <button onclick="window.location.href='/refresh'">Refresh</button>
+
+    <h2>Best vs Projected</h2>
+    <p>{{ stats.hero.player }}: {{ stats.hero.actual }} (proj {{ stats.hero.projected }})</p>
+
+    <h2>Worst vs Projected</h2>
+    <p>{{ stats.zero.player }}: {{ stats.zero.actual }} (proj {{ stats.zero.projected }})</p>
+
+    <h2>MVP of the Week</h2>
+    <p>{{ stats.mvp.player }} ({{ stats.mvp.points }} pts)</p>
+
+    <h2>Bench MVP</h2>
+    <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points }} pts)</p>
+
+    <h2>Biggest Blowout</h2>
+    <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin }}</p>
+
+    <h2>Closest Match</h2>
+    <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin }}</p>
+
+    <h2>Best by Position</h2>
+    <ul>
+        {% for pos, item in stats.best_by_position.items() %}
+        <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points }} pts)</li>
+        {% endfor %}
+    </ul>
+
+    <h2>All-Time Points</h2>
+    <table>
+        <tr><th>Team</th><th>Total Points</th></tr>
+        {% for row in stats.all_time_points %}
+        <tr>
+            <td>{{ row.team }}</td>
+            <td>{{ row.total_points }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
