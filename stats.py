@@ -278,4 +278,3 @@ def get_fantasy_stats(YEAR=2025, WEEK=None):
         "best_by_position": best_by_position,
         "all_time_points": total_df.to_dict(orient="records")
     }
->>>>>>> 68bcdc167b0e4aa64df6d73456c47732cd108fbf
