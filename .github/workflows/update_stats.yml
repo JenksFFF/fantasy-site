@@ -1,40 +1,42 @@
 name: Update Stats Weekly
 
 on:
-  schedule:
-    # Runs at 2:00 AM every Tuesday
-    - cron: '0 2 * * 2'
-  workflow_dispatch:  # allows manual trigger too
+schedule:
+# Runs at 2:00 AM every Tuesday
+- cron: '0 2 * * 2'
+workflow_dispatch:  # allows manual trigger
 
 jobs:
-  update-stats:
-    runs-on: ubuntu-latest
+update-stats:
+runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+```
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+  - name: Set up Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.x'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests espn-api
+  - name: Install dependencies
+    run: |
+      python -m pip install --upgrade pip
+      pip install pandas requests espn-api
 
-      - name: Update stats.json
-        run: python update_data.py
-        env:
-          ESPN_S2: ${{ secrets.ESPN_S2 }}
-          SWID: ${{ secrets.SWID }}
+  - name: Update stats.json
+    env:
+      ESPN_S2: ${{ secrets.ESPN_S2 }}
+      SWID: ${{ secrets.SWID }}
+    run: python update_data.py
 
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add stats.json
-          git commit -m "Weekly update of stats.json"
-          git push
-        continue-on-error: true
+  - name: Commit and push changes
+    run: |
+      git config user.name "github-actions[bot]"
+      git config user.email "github-actions[bot]@users.noreply.github.com"
+      git add stats.json
+      git commit -m "Weekly update of stats.json"
+      git push
+    continue-on-error: true
+```
