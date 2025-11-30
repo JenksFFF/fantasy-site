@@ -1,0 +1,4 @@
+flask
+pandas
+espn_api
+requests
