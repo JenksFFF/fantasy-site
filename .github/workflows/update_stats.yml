@@ -10,7 +10,6 @@ jobs:
 update-stats:
 runs-on: ubuntu-latest
 
-```
 steps:
   - name: Checkout repository
     uses: actions/checkout@v3
@@ -39,4 +38,4 @@ steps:
       git commit -m "Weekly update of stats.json"
       git push
     continue-on-error: true
-```
+
