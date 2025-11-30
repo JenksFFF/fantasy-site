@@ -1,35 +1,40 @@
-name: Weekly Stats Update
+name: Update Stats Weekly
 
 on:
   schedule:
-    - cron: '0 2 * * 2'   # Every Tuesday at 0:00 UTC
-  workflow_dispatch:      # Allows manual run
+    # Runs at 2:00 AM every Tuesday
+    - cron: '0 2 * * 2'
+  workflow_dispatch:  # allows manual trigger too
 
 jobs:
-  update:
+  update-stats:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install requests espn-api
 
-      - name: Run update script
-        run: |
-          python update_data.py
+      - name: Update stats.json
+        run: python update_data.py
+        env:
+          ESPN_S2: ${{ secrets.ESPN_S2 }}
+          SWID: ${{ secrets.SWID }}
 
-      - name: Commit and push updated stats
+      - name: Commit and push changes
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add data/stats.json
-          git commit -m "Weekly automatic stats update" || echo "No changes"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add stats.json
+          git commit -m "Weekly update of stats.json"
           git push
+        continue-on-error: true
