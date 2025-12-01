@@ -121,6 +121,7 @@ def get_fantasy_stats(YEAR=2025, WEEK=None):
 
     # Return everything as JSON-serializable
     return {
+        "week": WEEK,
         "hero": hero,
         "zero": zero,
         "mvp": mvp,

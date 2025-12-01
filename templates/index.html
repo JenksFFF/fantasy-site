@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Fantasy League Stats</title>
+    <title>Jenks Class of 2015 Fantasy Football Federation</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -65,8 +65,11 @@
     </style>
 </head>
 <body>
-    <h1>Fantasy Football Stats</h1>
-
+    <h1>Jenks Class of 2015 Fantasy Football Federation</h1>
+    <p>
+        Stats are updated for Week: <b>{{ stats.week }}</b>. 
+        Stats will be updated again on Tuesday at 2am.
+    </p>
     <div class="card">
         <h2>Best vs Projected</h2>
         <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
