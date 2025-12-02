@@ -1,222 +1,290 @@
 <!DOCTYPE html>
-
 <html>
 <head>
+    <meta charset="utf-8" />
+    <!-- CRITICAL: mobile responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Jenks Class of 2015 Fantasy Football Federation</title>
     <style>
+        /* predictable box-sizing so padding doesn't break widths */
+        *, *::before, *::after { box-sizing: border-box; }
+
         body { 
-        font-family: Arial, sans-serif; 
-        background: #f5f5f5; 
-        padding: 20px; 
-        color: #333;
-        margin: 0;
-    }
-
-    h1 {
-        text-align: center;
-        font-size: 36px;
-        margin-bottom: 40px;
-    }
-
-    h2 {
-        font-size: 24px;
-        margin-top: 30px;
-        margin-bottom: 10px;
-        color: #7D2248; /* Maroon */
-    }
-
-    /* ---- LAYOUT ---- */
-    .layout {
-        display: flex;
-        gap: 20px;
-    }
-
-    .main-column {
-        width: 80%;
-    }
-
-    .side-column {
-        width: 20%;
-    }
-
-    /* ---- CARDS ---- */
-    .card {
-        background: white;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    table { 
-        border-collapse: collapse; 
-        width: 100%; 
-        margin-top: 10px; 
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    th, td { 
-        border: 1px solid #ccc; 
-        padding: 12px; 
-        text-align: left;
-    }
-
-    th { 
-        background: #7D2248; /* Maroon */
-        color: white;
-    }
-
-    tr:nth-child(even) { 
-        background: #f2f2f2; 
-    }
-
-    ul { 
-        list-style: none; 
-        padding-left: 0; 
-    }
-
-    li { 
-        padding: 6px 0; 
-    }
-
-    /* ---- MOBILE RESPONSIVENESS ---- */
-    @media (max-width: 768px) {
-        .layout {
-            flex-direction: column;
+            font-family: Arial, sans-serif; 
+            background: #f5f5f5; 
+            padding: 20px; 
+            color: #333;
+            margin: 0;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
         }
 
-        .main-column,
-        .side-column {
-            width: 100%;
-        }
-
-        body {
-            padding: 10px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         h1 {
-            font-size: 28px;
+            text-align: center;
+            font-size: 36px;
             margin-bottom: 20px;
+        }
+
+        p.meta {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #444;
         }
 
         h2 {
             font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #7D2248; /* Maroon */
+        }
+
+        /* ---- LAYOUT: flexible and wraps ---- */
+        .layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            flex-wrap: wrap; /* allow wrapping on narrow screens */
+        }
+
+        .main-column {
+            /* allow main to grow and shrink, prefer 80% on wide screens */
+            flex: 1 1 65%;
+            min-width: 280px;
+        }
+
+        .side-column {
+            /* side column fixed-ish but can shrink; will wrap below on narrow screens */
+            flex: 0 0 300px; /* prefer 300px sidebar on desktop */
+            min-width: 220px;
         }
 
         .card {
-            padding: 15px;
+            background: white;
+            padding: 18px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
-        table th, table td {
-            padding: 10px;
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            margin-top: 10px; 
+            border-radius: 8px;
+            overflow: hidden;
+            table-layout: auto;
         }
 
-        img {
-            width: 40px !important;
-            height: 40px !important;
+        th, td { 
+            border: 1px solid #e0e0e0; 
+            padding: 10px 12px; 
+            text-align: left;
+            vertical-align: middle;
+            word-break: break-word;
         }
-    }
-</style>
 
+        th { 
+            background: #7D2248; /* Maroon */
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) { 
+            background: #fafafa; 
+        }
+
+        ul { 
+            list-style: none; 
+            padding-left: 0; 
+            margin: 0;
+        }
+
+        li { 
+            padding: 6px 0; 
+        }
+
+        /* avatar/title row */
+        .title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .title-row img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7D2248;
+            flex: 0 0 50px;
+        }
+        .title-row h2 {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.1;
+        }
+
+        /* make long tables inside side column scrollable if narrow */
+        .side-column .card > .table-wrap {
+            max-height: 60vh;
+            overflow: auto;
+        }
+
+        /* ---- MOBILE RESPONSIVENESS ---- */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+
+            h1 { font-size: 22px; margin-bottom: 12px; }
+            p.meta { font-size: 14px; margin-bottom: 12px; }
+
+            /* stack columns vertically (main first, side second) */
+            .layout {
+                flex-direction: column;
+            }
+
+            .main-column, .side-column {
+                flex: 1 1 100%;
+                min-width: 0;
+            }
+
+            .side-column {
+                order: 2; /* ensure side column comes after main column */
+            }
+
+            .title-row img {
+                width: 40px;
+                height: 40px;
+                border-width: 2px;
+            }
+
+            .card {
+                padding: 14px;
+                border-radius: 10px;
+            }
+
+            table th, table td {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            /* ensure the power rankings table doesn't try to shrink into a tiny column,
+               instead allow horizontal scrolling if necessary */
+            .side-column table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            /* slightly reduce spacing for compact mobile layout */
+            .layout > * { margin-bottom: 8px; }
+        }
+
+        /* Optional: hover highlight for desktop */
+        @media (hover: hover) {
+            tr:hover { background: #fff6f8; }
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Jenks Class of 2015 Fantasy Football Federation</h1>
-    <p>
-        Stats are updated for Week: <b>{{ stats.week }}</b>. 
-        Stats will be updated again on Tuesday at 2am.
-    </p>
+    <div class="container">
+        <h1>Jenks Class of 2015 Fantasy Football Federation</h1>
+        <p class="meta">Stats are updated for Week: <b>{{ stats.week }}</b>. Stats will be updated again on Tuesday at 2am.</p>
 
+        <div class="layout">
 
-<div class="layout">
+            <!-- LEFT SIDE: main content -->
+            <div class="main-column">
 
-    <!-- LEFT SIDE: 80% CONTENT -->
-    <div class="main-column">
+                <div class="card">
+                    <h2>Best vs Projected</h2>
+                    <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
+                </div>
 
-        <div class="card">
-            <h2>Best vs Projected</h2>
-            <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
-        </div>
+                <div class="card">
+                    <h2>Worst vs Projected</h2>
+                    <p>{{ stats.zero.player }}: {{ stats.zero.actual|round(2) }} (proj {{ stats.zero.projected|round(2) }})</p>
+                </div>
 
-        <div class="card">
-            <h2>Worst vs Projected</h2>
-            <p>{{ stats.zero.player }}: {{ stats.zero.actual|round(2) }} (proj {{ stats.zero.projected|round(2) }})</p>
-        </div>
+                <div class="card">
+                    <h2>MVP of the Week</h2>
+                    <p>{{ stats.mvp.player }} ({{ stats.mvp.points|round(2) }} pts)</p>
+                </div>
 
-        <div class="card">
-            <h2>MVP of the Week</h2>
-            <p>{{ stats.mvp.player }} ({{ stats.mvp.points|round(2) }} pts)</p>
-        </div>
+                <div class="card">
+                    <h2>Bench MVP</h2>
+                    <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points|round(2) }} pts)</p>
+                </div>
 
-        <div class="card">
-            <h2>Bench MVP</h2>
-            <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points|round(2) }} pts)</p>
-        </div>
+                <div class="card">
+                    <h2>Biggest Blowout</h2>
+                    <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin|round(2) }}</p>
+                </div>
 
-        <div class="card">
-            <h2>Biggest Blowout</h2>
-            <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin|round(2) }}</p>
-        </div>
+                <div class="card">
+                    <h2>Closest Match</h2>
+                    <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin|round(2) }}</p>
+                </div>
 
-        <div class="card">
-            <h2>Closest Match</h2>
-            <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin|round(2) }}</p>
-        </div>
+                <div class="card">
+                    <h2>Best by Position</h2>
+                    <ul>
+                        {% for pos, item in stats.best_by_position.items() %}
+                        <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points|round(2) }} pts)</li>
+                        {% endfor %}
+                    </ul>
+                </div>
 
-        <div class="card">
-            <h2>Best by Position</h2>
-            <ul>
-                {% for pos, item in stats.best_by_position.items() %}
-                <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points|round(2) }} pts)</li>
-                {% endfor %}
-            </ul>
-        </div>
+                <div class="card">
+                    <h2>All-Time Points</h2>
+                    <table>
+                        <tr><th>Team</th><th>Total Points</th></tr>
+                        {% for row in stats.all_time_points %}
+                        <tr>
+                            <td>{{ row.team }}</td>
+                            <td>{{ row.total_points|round(2) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
 
-        <div class="card">
-            <h2>All-Time Points</h2>
-            <table>
-                <tr><th>Team</th><th>Total Points</th></tr>
-                {% for row in stats.all_time_points %}
-                <tr>
-                    <td>{{ row.team }}</td>
-                    <td>{{ row.total_points|round(2) }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-
-    </div>
-
-    <!-- RIGHT SIDE: POWER RANKINGS -->
-    <div class="side-column">
-        <div class="card">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                <img src="https://pbs.twimg.com/profile_images/1523880412354859008/Vsp4m-Q6_400x400.jpg" 
-                     alt="Parker" 
-                     style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #7D2248;">
-                <h2 style="margin: 0;">Parker's Power Rankings</h2>
             </div>
 
-            <table>
-                <tr><th>#</th><th>Team</th></tr>
-                <tr><td>1</td><td>Waller's Hookers</td></tr>
-                <tr><td>2</td><td>WestPhillyPoondestroyers</td></tr>
-                <tr><td>3</td><td>Miller Time</td></tr>
-                <tr><td>4</td><td>Clutch Hutch</td></tr>
-                <tr><td>5</td><td>South Side Munchmen</td></tr>
-                <tr><td>6</td><td>Wolf of WallerStreet</td></tr>
-                <tr><td>7</td><td>Tan Currency</td></tr>
-                <tr><td>8</td><td>The Biggs Easy</td></tr>
-                <tr><td>9</td><td>Clinton Greats</td></tr>
-                <tr><td>10</td><td>L.I.T Stove</td></tr>
-                <tr><td>11</td><td>NASCAR KENNY</td></tr>
-                <tr><td>12</td><td>Young Bloods</td></tr>
-            </table>
+            <!-- RIGHT SIDE: Power Rankings -->
+            <div class="side-column">
+                <div class="card">
+                    <div class="title-row">
+                        <img src="https://pbs.twimg.com/profile_images/1523880412354859008/Vsp4m-Q6_400x400.jpg" alt="Parker">
+                        <h2>Parker's Power Rankings</h2>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <tr><th>#</th><th>Team</th></tr>
+                            <tr><td>1</td><td>Waller's Hookers</td></tr>
+                            <tr><td>2</td><td>WestPhillyPoondestroyers</td></tr>
+                            <tr><td>3</td><td>Miller Time</td></tr>
+                            <tr><td>4</td><td>Clutch Hutch</td></tr>
+                            <tr><td>5</td><td>South Side Munchmen</td></tr>
+                            <tr><td>6</td><td>Wolf of WallerStreet</td></tr>
+                            <tr><td>7</td><td>Tan Currency</td></tr>
+                            <tr><td>8</td><td>The Biggs Easy</td></tr>
+                            <tr><td>9</td><td>Clinton Greats</td></tr>
+                            <tr><td>10</td><td>L.I.T Stove</td></tr>
+                            <tr><td>11</td><td>NASCAR KENNY</td></tr>
+                            <tr><td>12</td><td>Young Bloods</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-
-</div>
-
-
 </body>
 </html>
