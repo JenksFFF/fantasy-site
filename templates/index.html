@@ -5,11 +5,12 @@
     <title>Jenks Class of 2015 Fantasy Football Federation</title>
     <style>
         body { 
-            font-family: Arial, sans-serif; 
-            background: #f5f5f5; 
-            padding: 20px; 
-            color: #333;
-        }
+        font-family: Arial, sans-serif; 
+        background: #f5f5f5; 
+        padding: 20px; 
+        color: #333;
+        margin: 0;
+    }
 
     h1 {
         text-align: center;
@@ -24,6 +25,7 @@
         color: #7D2248; /* Maroon */
     }
 
+    /* ---- LAYOUT ---- */
     .layout {
         display: flex;
         gap: 20px;
@@ -37,6 +39,7 @@
         width: 20%;
     }
 
+    /* ---- CARDS ---- */
     .card {
         background: white;
         padding: 20px;
@@ -75,6 +78,44 @@
 
     li { 
         padding: 6px 0; 
+    }
+
+    /* ---- MOBILE RESPONSIVENESS ---- */
+    @media (max-width: 768px) {
+        .layout {
+            flex-direction: column;
+        }
+
+        .main-column,
+        .side-column {
+            width: 100%;
+        }
+
+        body {
+            padding: 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        .card {
+            padding: 15px;
+        }
+
+        table th, table td {
+            padding: 10px;
+        }
+
+        img {
+            width: 40px !important;
+            height: 40px !important;
+        }
     }
 </style>
 
