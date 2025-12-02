@@ -23,6 +23,19 @@
             color: #0077ff;
         }
 
+        .layout {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-column {
+            width: 80%;
+        }
+
+        .side-column {
+            width: 20%;
+        }
+
         .card {
             background: white;
             padding: 20px;
@@ -70,56 +83,88 @@
         Stats are updated for Week: <b>{{ stats.week }}</b>. 
         Stats will be updated again on Tuesday at 2am.
     </p>
-    <div class="card">
-        <h2>Best vs Projected</h2>
-        <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
-    </div>
 
-    <div class="card">
-        <h2>Worst vs Projected</h2>
-        <p>{{ stats.zero.player }}: {{ stats.zero.actual|round(2) }} (proj {{ stats.zero.projected|round(2) }})</p>
-    </div>
+    <div class="layout">
 
-    <div class="card">
-        <h2>MVP of the Week</h2>
-        <p>{{ stats.mvp.player }} ({{ stats.mvp.points|round(2) }} pts)</p>
-    </div>
+        <!-- LEFT SIDE: 80% CONTENT -->
+        <div class="main-column">
 
-    <div class="card">
-        <h2>Bench MVP</h2>
-        <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points|round(2) }} pts)</p>
-    </div>
+            <div class="card">
+                <h2>Best vs Projected</h2>
+                <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
+            </div>
 
-    <div class="card">
-        <h2>Biggest Blowout</h2>
-        <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin|round(2) }}</p>
-    </div>
+            <div class="card">
+                <h2>Worst vs Projected</h2>
+                <p>{{ stats.zero.player }}: {{ stats.zero.actual|round(2) }} (proj {{ stats.zero.projected|round(2) }})</p>
+            </div>
 
-    <div class="card">
-        <h2>Closest Match</h2>
-        <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin|round(2) }}</p>
-    </div>
+            <div class="card">
+                <h2>MVP of the Week</h2>
+                <p>{{ stats.mvp.player }} ({{ stats.mvp.points|round(2) }} pts)</p>
+            </div>
 
-    <div class="card">
-        <h2>Best by Position</h2>
-        <ul>
-            {% for pos, item in stats.best_by_position.items() %}
-            <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points|round(2) }} pts)</li>
-            {% endfor %}
-        </ul>
-    </div>
+            <div class="card">
+                <h2>Bench MVP</h2>
+                <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points|round(2) }} pts)</p>
+            </div>
 
-    <div class="card">
-        <h2>All-Time Points</h2>
-        <table>
-            <tr><th>Team</th><th>Total Points</th></tr>
-            {% for row in stats.all_time_points %}
-            <tr>
-                <td>{{ row.team }}</td>
-                <td>{{ row.total_points|round(2) }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+            <div class="card">
+                <h2>Biggest Blowout</h2>
+                <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin|round(2) }}</p>
+            </div>
+
+            <div class="card">
+                <h2>Closest Match</h2>
+                <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin|round(2) }}</p>
+            </div>
+
+            <div class="card">
+                <h2>Best by Position</h2>
+                <ul>
+                    {% for pos, item in stats.best_by_position.items() %}
+                    <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points|round(2) }} pts)</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>All-Time Points</h2>
+                <table>
+                    <tr><th>Team</th><th>Total Points</th></tr>
+                    {% for row in stats.all_time_points %}
+                    <tr>
+                        <td>{{ row.team }}</td>
+                        <td>{{ row.total_points|round(2) }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE: POWER RANKINGS -->
+        <div class="side-column">
+            <div class="card">
+                <h2>Parker's Power Rankings</h2>
+                <table>
+                    <tr><th>#</th><th>Team</th></tr>
+                    <tr><td>1</td><td>[Waller's Hookers]</td></tr>
+                    <tr><td>2</td><td>[WestPhillyPoondestroyers]</td></tr>
+                    <tr><td>3</td><td>[Miller Time]</td></tr>
+                    <tr><td>4</td><td>[Clutch Hutch]</td></tr>
+                    <tr><td>5</td><td>[South Side Munchmen]</td></tr>
+                    <tr><td>6</td><td>[Wolf of WallerStreet]</td></tr>
+                    <tr><td>7</td><td>[Tan Currency]</td></tr>
+                    <tr><td>8</td><td>[The Biggs Easy]</td></tr>
+                    <tr><td>9</td><td>[Clinton Greats]</td></tr>
+                    <tr><td>10</td><td>[L.I.T Stove]</td></tr>
+                    <tr><td>11</td><td>[NASCAR KENNY]</td></tr>
+                    <tr><td>12</td><td>[Young Bloods]</td></tr>
+                </table>
+            </div>
+        </div>
+
     </div>
 
 </body>
