@@ -20,7 +20,7 @@ def get_fantasy_stats(YEAR=2025, WEEK=None):
     )
 
     if WEEK is None:
-        WEEK = league.currentMatchupPeriod
+        WEEK = league.currentMatchupPeriod - 1
 
     box_scores = league.box_scores(WEEK)
 
