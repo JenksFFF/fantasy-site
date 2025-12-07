@@ -16,9 +16,11 @@ jobs:
       - name: Test workflow trigger
         run: echo "Workflow triggered successfully at $(date)!"
 
-      # Step 1: Checkout repository
+      # Step 1: Checkout repository without persisting default credentials
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # Important: disables default GITHUB_TOKEN
 
       # Step 2: Set up Python
       - name: Set up Python
@@ -39,7 +41,11 @@ jobs:
           SWID: ${{ secrets.SWID }}
         run: python update_data.py
 
-      # Step 5: Commit and push updates using PAT
+      # Step 5: Show changed files (optional but helpful for confirmation)
+      - name: Show changed files
+        run: git status
+
+      # Step 6: Commit and push updates using PAT
       - name: Commit and push updated stats.json
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
