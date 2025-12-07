@@ -14,9 +14,9 @@ jobs:
     steps:
       # Step 0: Test workflow trigger
       - name: Test workflow trigger
-        run: echo "Workflow triggered successfully!"
+        run: echo "Workflow triggered successfully at $(date)!"
 
-      # Step 1: Checkout repo
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
