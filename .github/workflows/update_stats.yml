@@ -1,40 +1,51 @@
 name: 2am Tuesday Update
 
 on:
+  # Scheduled: every Tuesday at 2:00 AM CST (08:00 UTC)
   schedule:
-    # Runs every Tuesday at 2:00 AM CST (08:00 UTC)
     - cron: "0 8 * * TUE"
-  workflow_dispatch: {}  # Allows manual runs
+  # Allows manual triggering for testing
+  workflow_dispatch: {}
 
 jobs:
   update-stats:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # Step 0: Test workflow trigger
+      - name: Test workflow trigger
+        run: echo "Workflow triggered successfully!"
+
+      # Step 1: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Step 4: Run stats update script
       - name: Run stats update
         env:
           ESPN_S2: ${{ secrets.ESPN_S2 }}
           SWID: ${{ secrets.SWID }}
-        run: |
-          python update_data.py
+        run: python update_data.py
 
+      # Step 5: Commit and push updates using PAT
       - name: Commit and push updated stats.json
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add data/stats.json
           git commit -m "Weekly stats update" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${PAT_TOKEN}@github.com/JenksFFF/fantasy-site.git HEAD:main
