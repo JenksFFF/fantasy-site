@@ -156,6 +156,12 @@
             text-align: center;
         }
 
+        .all-time-points-table th:nth-child(3),
+        .all-time-points-table td:nth-child(3) {
+            width: 150px;
+            text-align: center;
+        }
+
         /* Fantasy Sports Book Odds table formatting */
         .odds-table {
             border-collapse: separate;
@@ -196,8 +202,46 @@
     </style>
 
     <script>
+        // Load all-time points from JSON file and populate table
+        async function loadAllTimePoints() {
+            try {
+                const response = await fetch('/data/all_time_points.json');
+                if (!response.ok) throw new Error('Failed to load data');
+                const data = await response.json();
+                
+                const tbody = document.getElementById('all-time-points-body');
+                tbody.innerHTML = '';
+                
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    
+                    const teamTd = document.createElement('td');
+                    teamTd.textContent = row.team;
+                    
+                    const pointsTd = document.createElement('td');
+                    pointsTd.textContent = row.total_points.toFixed(2);
+                    
+                    const movementTd = document.createElement('td');
+                    movementTd.setAttribute('data-move', row.movement);
+                    
+                    tr.appendChild(teamTd);
+                    tr.appendChild(pointsTd);
+                    tr.appendChild(movementTd);
+                    
+                    tbody.appendChild(tr);
+                });
+                
+                // Trigger movement converter after populating
+                convertMovementIndicators();
+            } catch (error) {
+                console.error('Error loading all-time points:', error);
+                const tbody = document.getElementById('all-time-points-body');
+                tbody.innerHTML = '<tr><td colspan="3">Unable to load data</td></tr>';
+            }
+        }
+
         // Automatically convert +2 or -1 into visual arrows
-        document.addEventListener("DOMContentLoaded", function () {
+        function convertMovementIndicators() {
             document.querySelectorAll("td[data-move]").forEach(function (cell) {
                 const val = cell.getAttribute("data-move");
                 if (!val) return;
@@ -230,6 +274,12 @@
                 cell.innerHTML = "";
                 cell.appendChild(wrapper);
             });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadAllTimePoints();
+            // Also apply to Parker's Power Rankings on page load
+            convertMovementIndicators();
         });
     </script>
 </head>
@@ -283,13 +333,8 @@
                     <h2>All-Time Points</h2>
                     <div class="table-wrap">
                         <table class="all-time-points-table">
-                            <tr><th>Team</th><th>Total Points</th></tr>
-                            {% for row in stats.all_time_points %}
-                            <tr>
-                                <td>{{ row.team }}</td>
-                                <td>{{ row.total_points|round(2) }}</td>
-                            </tr>
-                            {% endfor %}
+                            <tr><th>Team</th><th>Total Points</th><th>Movement</th></tr>
+                            <tbody id="all-time-points-body"></tbody>
                         </table>
                     </div>
                 </div>
