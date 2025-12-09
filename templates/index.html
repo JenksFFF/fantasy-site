@@ -74,9 +74,32 @@
         @keyframes drop {
             0% { opacity: 0; transform: translateY(-6px); }
             100% { opacity: 1; transform: translateY(0); }
-        } {
-            0% { opacity: 0; transform: translateY(-6px); }
-            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Parker's Power Rankings fixed column widths */
+        .power-rankings-table th,
+        .power-rankings-table td {
+            border: 1px solid #e0e0e0;
+            padding: 8px 10px;
+            white-space: nowrap; /* Prevent wrapping */
+        }
+
+        .power-rankings-table th:nth-child(1),
+        .power-rankings-table td:nth-child(1) {
+            width: 40px; /* Rank number */
+            text-align: center;
+        }
+
+        .power-rankings-table th:nth-child(2),
+        .power-rankings-table td:nth-child(2) {
+            width: 220px; /* Team name */
+            text-align: left;
+        }
+
+        .power-rankings-table th:nth-child(3),
+        .power-rankings-table td:nth-child(3) {
+            width: 80px; /* Movement */
+            text-align: center;
         }
     </style>
 
@@ -126,56 +149,56 @@
         <div class="layout">
             <div class="main-column">
                 <div class="card">
-    <h2>Best vs Projected</h2>
-    <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
-</div>
+                    <h2>Best vs Projected</h2>
+                    <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
+                </div>
 
-<div class="card">
-    <h2>Worst vs Projected</h2>
-    <p>{{ stats.zero.player }}: {{ stats.zero.actual|round(2) }} (proj {{ stats.zero.projected|round(2) }})</p>
-</div>
+                <div class="card">
+                    <h2>Worst vs Projected</h2>
+                    <p>{{ stats.zero.player }}: {{ stats.zero.actual|round(2) }} (proj {{ stats.zero.projected|round(2) }})</p>
+                </div>
 
-<div class="card">
-    <h2>MVP of the Week</h2>
-    <p>{{ stats.mvp.player }} ({{ stats.mvp.points|round(2) }} pts)</p>
-</div>
+                <div class="card">
+                    <h2>MVP of the Week</h2>
+                    <p>{{ stats.mvp.player }} ({{ stats.mvp.points|round(2) }} pts)</p>
+                </div>
 
-<div class="card">
-    <h2>Bench MVP</h2>
-    <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points|round(2) }} pts)</p>
-</div>
+                <div class="card">
+                    <h2>Bench MVP</h2>
+                    <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points|round(2) }} pts)</p>
+                </div>
 
-<div class="card">
-    <h2>Biggest Blowout</h2>
-    <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin|round(2) }}</p>
-</div>
+                <div class="card">
+                    <h2>Biggest Blowout</h2>
+                    <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin|round(2) }}</p>
+                </div>
 
-<div class="card">
-    <h2>Closest Match</h2>
-    <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin|round(2) }}</p>
-</div>
+                <div class="card">
+                    <h2>Closest Match</h2>
+                    <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin|round(2) }}</p>
+                </div>
 
-<div class="card">
-    <h2>Best by Position</h2>
-    <ul>
-        {% for pos, item in stats.best_by_position.items() %}
-        <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points|round(2) }} pts)</li>
-        {% endfor %}
-    </ul>
-</div>
+                <div class="card">
+                    <h2>Best by Position</h2>
+                    <ul>
+                        {% for pos, item in stats.best_by_position.items() %}
+                        <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points|round(2) }} pts)</li>
+                        {% endfor %}
+                    </ul>
+                </div>
 
-<div class="card">
-    <h2>All-Time Points</h2>
-    <table>
-        <tr><th className="w-48"$1>Team</th><th>Total Points</th></tr>
-        {% for row in stats.all_time_points %}
-        <tr>
-            <td>{{ row.team }}</td>
-            <td>{{ row.total_points|round(2) }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+                <div class="card">
+                    <h2>All-Time Points</h2>
+                    <table>
+                        <tr><th>Team</th><th>Total Points</th></tr>
+                        {% for row in stats.all_time_points %}
+                        <tr>
+                            <td>{{ row.team }}</td>
+                            <td>{{ row.total_points|round(2) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
 
             <div class="side-column">
@@ -186,10 +209,12 @@
                     </div>
 
                     <div class="table-wrap">
-                        <table>
-                            <tr><th className="w-12"$1>#</th><th className="w-24">Movement</th><th style="width: 90px; text-align:center;">Movement<\/th></tr>
-
-                            <!-- EXAMPLE ROWS — update data-move manually -->
+                        <table class="power-rankings-table">
+                            <tr>
+                                <th>#</th>
+                                <th>Team</th>
+                                <th>Movement</th>
+                            </tr>
                             <tr><td>1</td><td>Waller's Hookers</td><td data-move="+1"></td></tr>
                             <tr><td>2</td><td>WestPhillyPoondestroyers</td><td data-move="0"></td></tr>
                             <tr><td>3</td><td>Miller Time</td><td data-move="-2"></td></tr>
