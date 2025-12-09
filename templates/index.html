@@ -102,19 +102,57 @@
 
         .power-rankings-table th:nth-child(1),
         .power-rankings-table td:nth-child(1) {
-            width: 50px;
+            width: 80px;
             text-align: center;
         }
 
         .power-rankings-table th:nth-child(2),
         .power-rankings-table td:nth-child(2) {
-            width: 280px;
+            width: 380px;
             text-align: left;
         }
 
         .power-rankings-table th:nth-child(3),
         .power-rankings-table td:nth-child(3) {
-            width: 110px;
+            width: 150px;
+            text-align: center;
+        }
+
+        /* All-Time Points table formatting */
+        .all-time-points-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        .all-time-points-table th,
+        .all-time-points-table td {
+            padding: 12px 16px;
+        }
+
+        .all-time-points-table th {
+            background-color: #7D2248;
+            color: white;
+            font-weight: 600;
+        }
+
+        .all-time-points-table tr:nth-child(even) td {
+            background-color: #fafafa;
+        }
+
+        .all-time-points-table tr:nth-child(odd) td {
+            background-color: white;
+        }
+
+        .all-time-points-table th:nth-child(1),
+        .all-time-points-table td:nth-child(1) {
+            width: 280px;
+            text-align: left;
+        }
+
+        .all-time-points-table th:nth-child(2),
+        .all-time-points-table td:nth-child(2) {
+            width: 150px;
             text-align: center;
         }
     </style>
@@ -205,15 +243,17 @@
 
                 <div class="card">
                     <h2>All-Time Points</h2>
-                    <table>
-                        <tr><th>Team</th><th>Total Points</th></tr>
-                        {% for row in stats.all_time_points %}
-                        <tr>
-                            <td>{{ row.team }}</td>
-                            <td>{{ row.total_points|round(2) }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
+                    <div class="table-wrap">
+                        <table class="all-time-points-table">
+                            <tr><th>Team</th><th>Total Points</th></tr>
+                            {% for row in stats.all_time_points %}
+                            <tr>
+                                <td>{{ row.team }}</td>
+                                <td>{{ row.total_points|round(2) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
             </div>
 
