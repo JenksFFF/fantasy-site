@@ -155,6 +155,44 @@
             width: 150px;
             text-align: center;
         }
+
+        /* Fantasy Sports Book Odds table formatting */
+        .odds-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        .odds-table th,
+        .odds-table td {
+            padding: 12px 16px;
+        }
+
+        .odds-table th {
+            background-color: #7D2248;
+            color: white;
+            font-weight: 600;
+        }
+
+        .odds-table tr:nth-child(even) td {
+            background-color: #fafafa;
+        }
+
+        .odds-table tr:nth-child(odd) td {
+            background-color: white;
+        }
+
+        .odds-table th:nth-child(1),
+        .odds-table td:nth-child(1) {
+            width: 280px;
+            text-align: left;
+        }
+
+        .odds-table th:nth-child(2),
+        .odds-table td:nth-child(2) {
+            width: 150px;
+            text-align: center;
+        }
     </style>
 
     <script>
@@ -286,8 +324,45 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
+
+                <div class="card">
+                    <div class="title-row">
+                        <img src="https://hot-town-images.s3.amazonaws.com/khtt/production/2020/August/19/rscr-logo-2.1597870166119.png" alt="Fantasy Sports Book">
+                        <h2>Fantasy Sports Book Round 1 Odds</h2>
+                    </div>
+
+                    <h3 style="margin-top: 15px; margin-bottom: 10px; color: #7D2248; font-size: 16px;">Championship Bracket</h3>
+                    <div class="table-wrap">
+                        <table class="odds-table">
+                            <tr>
+                                <th>Team</th>
+                                <th>Odds</th>
+                            </tr>
+                            <tr><td>Waller's Hookers</td><td>-150</td></tr>
+                            <tr><td>WestPhillyPoondestroyers</td><td>+100</td></tr>
+                            <tr><td>Miller Time</td><td>+250</td></tr>
+                            <tr><td>Clutch Hutch</td><td>-110</td></tr>
+                            <tr><td>South Side Munchmen</td><td>+120</td></tr>
+                            <tr><td>Wolf of WallerStreet</td><td>+200</td></tr>
+                            <tr><td>Tan Currency</td><td>-130</td></tr>
+                            <tr><td>The Biggs Easy</td><td>+180</td></tr>
+                        </table>
+                    </div>
+
+                    <h3 style="margin-top: 15px; margin-bottom: 10px; color: #7D2248; font-size: 16px;">Staub Bracket</h3>
+                    <div class="table-wrap">
+                        <table class="odds-table">
+                            <tr>
+                                <th>Team</th>
+                                <th>Odds</th>
+                            </tr>
+                            <tr><td>Clinton Greats</td><td>+150</td></tr>
+                            <tr><td>L.I.T Stove</td><td>-110</td></tr>
+                            <tr><td>NASCAR KENNY</td><td>+220</td></tr>
+                            <tr><td>Young Bloods</td><td>+140</td></tr>
+                        </table>
+                    </div>
+                </div>
     </div>
 </body>
 </html>
