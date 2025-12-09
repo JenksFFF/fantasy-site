@@ -15,7 +15,7 @@
 
         .layout { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
         .main-column { flex: 1 1 65%; min-width: 280px; }
-        .side-column { flex: 0 0 320px; min-width: 250px; } /* increased min-width to fit wider table */
+        .side-column { flex: 0 0 300px; min-width: 220px; }
 
         .card { background: white; padding: 18px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 
@@ -36,7 +36,7 @@
         /* Movement indicators */
         td[data-move] {
             text-align: center !important;
-            width: 90px;
+            width: 90px; /* ensures enough room for arrows & numbers */
             white-space: nowrap;
         }
 
@@ -48,8 +48,16 @@
             width: 100%;
         }
 
-        .move-up { color: green; font-weight: bold; animation: rise 0.6s ease-out; }
-        .move-down { color: red; font-weight: bold; animation: drop 0.6s ease-out; }
+        .move-up {
+            color: green;
+            font-weight: bold;
+            animation: rise 0.6s ease-out;
+        }
+        .move-down {
+            color: red;
+            font-weight: bold;
+            animation: drop 0.6s ease-out;
+        }
 
         @keyframes rise {
             0% { opacity: 0; transform: translateY(6px); }
@@ -61,10 +69,10 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Parker's Power Rankings table fix */
+        /* Parker's Power Rankings fixed column widths and full background */
         .table-wrap {
             overflow: hidden;
-            border-radius: 12px; /* match card radius */
+            border-radius: 8px;
         }
 
         .power-rankings-table {
@@ -75,7 +83,7 @@
 
         .power-rankings-table th,
         .power-rankings-table td {
-            padding: 10px 12px;
+            padding: 8px 10px;
         }
 
         .power-rankings-table th {
@@ -84,16 +92,31 @@
             font-weight: 600;
         }
 
-        .power-rankings-table tr:nth-child(even) td { background-color: #fafafa; }
-        .power-rankings-table tr:nth-child(odd) td { background-color: white; }
+        .power-rankings-table tr:nth-child(even) td {
+            background-color: #fafafa;
+        }
 
-        /* Updated wider column widths */
+        .power-rankings-table tr:nth-child(odd) td {
+            background-color: white;
+        }
+
         .power-rankings-table th:nth-child(1),
-        .power-rankings-table td:nth-child(1) { width: 50px; text-align: center; }
+        .power-rankings-table td:nth-child(1) {
+            width: 40px;
+            text-align: center;
+        }
+
         .power-rankings-table th:nth-child(2),
-        .power-rankings-table td:nth-child(2) { width: 260px; text-align: left; }
+        .power-rankings-table td:nth-child(2) {
+            width: 220px;
+            text-align: left;
+        }
+
         .power-rankings-table th:nth-child(3),
-        .power-rankings-table td:nth-child(3) { width: 100px; text-align: center; }
+        .power-rankings-table td:nth-child(3) {
+            width: 80px;
+            text-align: center;
+        }
     </style>
 
     <script>
@@ -141,7 +164,45 @@
 
         <div class="layout">
             <div class="main-column">
-                <!-- Other cards remain unchanged -->
+                <div class="card">
+                    <h2>Best vs Projected</h2>
+                    <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
+                </div>
+
+                <div class="card">
+                    <h2>Worst vs Projected</h2>
+                    <p>{{ stats.zero.player }}: {{ stats.zero.actual|round(2) }} (proj {{ stats.zero.projected|round(2) }})</p>
+                </div>
+
+                <div class="card">
+                    <h2>MVP of the Week</h2>
+                    <p>{{ stats.mvp.player }} ({{ stats.mvp.points|round(2) }} pts)</p>
+                </div>
+
+                <div class="card">
+                    <h2>Bench MVP</h2>
+                    <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points|round(2) }} pts)</p>
+                </div>
+
+                <div class="card">
+                    <h2>Biggest Blowout</h2>
+                    <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin|round(2) }}</p>
+                </div>
+
+                <div class="card">
+                    <h2>Closest Match</h2>
+                    <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin|round(2) }}</p>
+                </div>
+
+                <div class="card">
+                    <h2>Best by Position</h2>
+                    <ul>
+                        {% for pos, item in stats.best_by_position.items() %}
+                        <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points|round(2) }} pts)</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
                 <div class="card">
                     <h2>All-Time Points</h2>
                     <table>
