@@ -20,22 +20,15 @@
         .card { background: white; padding: 18px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 
         table {
-            border-collapse: collapse;
             width: 100%;
-            margin-top: 10px;
-            border-radius: 8px;
-            overflow: hidden;
-            table-layout: auto; /* ensures full column background coverage */
+            table-layout: auto;
         }
         th, td {
-            border: 1px solid #e0e0e0;
             padding: 10px 12px;
             text-align: left;
             vertical-align: middle;
             word-break: break-word;
         }
-        th { background: #7D2248; color: white; font-weight: 600; }
-        tr:nth-child(even) { background: #fafafa; }
 
         .title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
         .title-row img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #7D2248; }
@@ -76,29 +69,52 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Parker's Power Rankings fixed column widths */
+        /* Parker's Power Rankings fixed column widths and full background */
+        .table-wrap {
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .power-rankings-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+
         .power-rankings-table th,
         .power-rankings-table td {
-            border: 1px solid #e0e0e0;
             padding: 8px 10px;
-            white-space: nowrap; /* Prevent wrapping */
+        }
+
+        .power-rankings-table th {
+            background-color: #7D2248;
+            color: white;
+            font-weight: 600;
+        }
+
+        .power-rankings-table tr:nth-child(even) td {
+            background-color: #fafafa;
+        }
+
+        .power-rankings-table tr:nth-child(odd) td {
+            background-color: white;
         }
 
         .power-rankings-table th:nth-child(1),
         .power-rankings-table td:nth-child(1) {
-            width: 40px; /* Rank number */
+            width: 40px;
             text-align: center;
         }
 
         .power-rankings-table th:nth-child(2),
         .power-rankings-table td:nth-child(2) {
-            width: 220px; /* Team name */
+            width: 220px;
             text-align: left;
         }
 
         .power-rankings-table th:nth-child(3),
         .power-rankings-table td:nth-child(3) {
-            width: 80px; /* Movement */
+            width: 80px;
             text-align: center;
         }
     </style>
