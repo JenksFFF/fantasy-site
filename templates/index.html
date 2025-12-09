@@ -88,7 +88,57 @@
 
         <div class="layout">
             <div class="main-column">
-                <!-- Main content unchanged -->
+                <div class="card">
+    <h2>Best vs Projected</h2>
+    <p>{{ stats.hero.player }}: {{ stats.hero.actual|round(2) }} (proj {{ stats.hero.projected|round(2) }})</p>
+</div>
+
+<div class="card">
+    <h2>Worst vs Projected</h2>
+    <p>{{ stats.zero.player }}: {{ stats.zero.actual|round(2) }} (proj {{ stats.zero.projected|round(2) }})</p>
+</div>
+
+<div class="card">
+    <h2>MVP of the Week</h2>
+    <p>{{ stats.mvp.player }} ({{ stats.mvp.points|round(2) }} pts)</p>
+</div>
+
+<div class="card">
+    <h2>Bench MVP</h2>
+    <p>{{ stats.bench_mvp.player }} ({{ stats.bench_mvp.points|round(2) }} pts)</p>
+</div>
+
+<div class="card">
+    <h2>Biggest Blowout</h2>
+    <p>{{ stats.blowout.winner_name }} beat {{ stats.blowout.loser_name }} by {{ stats.blowout.margin|round(2) }}</p>
+</div>
+
+<div class="card">
+    <h2>Closest Match</h2>
+    <p>{{ stats.closest.winner_name }} beat {{ stats.closest.loser_name }} by {{ stats.closest.margin|round(2) }}</p>
+</div>
+
+<div class="card">
+    <h2>Best by Position</h2>
+    <ul>
+        {% for pos, item in stats.best_by_position.items() %}
+        <li><b>{{ pos }}</b>: {{ item.player }} ({{ item.points|round(2) }} pts)</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card">
+    <h2>All-Time Points</h2>
+    <table>
+        <tr><th>Team</th><th>Total Points</th></tr>
+        {% for row in stats.all_time_points %}
+        <tr>
+            <td>{{ row.team }}</td>
+            <td>{{ row.total_points|round(2) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
             </div>
 
             <div class="side-column">
